@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# two·tickets
 
-## Getting Started
+A private, gamified travel-planning universe for two — dream up where to go, plan every hour of it,
+then keep it forever.
 
-First, run the development server:
+Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4** and **Framer Motion**.
+Trips, itineraries, budgets, checklists and the memory book all come from the FastAPI backend in
+`../backend`; the browser talks to it directly through `lib/api.ts`.
+
+## Run it
 
 ```bash
+npm install
+cp .env.local.example .env.local     # then point NEXT_PUBLIC_API_BASE_URL at the backend
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. `npm run build` for a production build, `npm run typecheck` for types.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The backend must be running (`uvicorn app.main:app --reload` in `../backend`, default
+`http://localhost:8000`) and its `FRONTEND_ORIGIN` must include this origin or CORS will block every
+call. When the API is unreachable a banner says so rather than the screens silently emptying.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `NEXT_PUBLIC_API_BASE_URL` | Backend origin; `/api/v1` is appended by the client | `http://localhost:8000` |
+| `NEXT_PUBLIC_API_TOKEN` | Bearer token, only when the backend runs with `AUTH_ENABLED=true` | unset |
 
-## Learn More
+## The six features
 
-To learn more about Next.js, take a look at the following resources:
+| Area | Route | What works |
+| --- | --- | --- |
+| AI Destination Discovery | `/discover` | Budget / timing / mood **plus a free-text prompt** describing the trip; the backend weights the words above the mood tags. Scored, reasoned recommendations as rich cards |
+| Destination details | `/destination/[id]` | Hero, overview, budget, experiences, stays, travel, AI itinerary preview |
+| Spin the Wheel | `/wheel` | Animated roulette, classic reveal + "Complete surprise" 3-clue mode |
+| AI Trip Planner | `/plan/[id]` → `/trip/[id]/itinerary` | Intake form calls `POST /trips/plan` (creates the trip *and* its itinerary); day-by-day timeline; replace / remove / move / complete activities; natural-language assistant |
+| Budget & Expenses | `/trip/[id]/budget` | Total / estimated / actual / remaining, planned-vs-actual per category, add-expense |
+| Preparation & Packing | `/trip/[id]/checklist` | Checkable prep sections feeding trip-readiness %, AI-generated packing list |
+| Our Adventures | `/adventures`, `/adventures/[id]` | Photo cards → scrapbook with masonry gallery, expense summary, AI "trip story" |
+| Upcoming Trip home | `/` | Homepage transforms into a live countdown + dashboard when a trip is active |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/                      Routes (App Router). Dynamic pages are Client Components using `use(params)`.
+components/
+  layout/                 Navbar (top bar + mobile tab bar), Footer, PageShell
+  ui/                     Button, GlassCard, Tag, ProgressBar, AnimatedCounter, Modal, Field set, SmartImage…
+  home/ discover/ wheel/ itinerary/ budget/ trip/ adventures/   feature components
+data/                     Local atlas: 8 curated destinations (imagery, experiences, stays, travel
+                          options), moods, and the checklist seed posted for a new trip
+lib/
+  types.ts                Domain model
+  api.ts                  fetch wrapper for the backend: base URL, `/api/v1` prefix, `ApiError`
+  store.tsx               `StoreProvider` — server data (trips, shortlist) plus the little that stays
+                          on the device (wheel line-up, active trip, destination cache, packing ticks)
+  currency.ts             Configurable currency (defaults to INR) + formatting
+  budget.ts date.ts checklist.ts images.ts cn.ts   pure helpers
+services/
+  dto.ts                  Wire types mirroring the backend's Pydantic schemas (snake_case)
+  map.ts                  Wire ⇄ domain conversion, plus the local-atlas enrichment
+  destinations.ts trips.ts expenses.ts checklist.ts memories.ts adventures.ts   one per API area
+  types.ts                Shared result shapes + the `TravelDataService` interface
+  travel.mock.ts          Simulated flights / hotels / geocode — the backend has no such endpoints
+  index.ts                Single wiring point
+```
 
-## Deploy on Vercel
+## How the frontend and backend divide the work
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The backend owns everything that must survive a refresh or a second device: destinations it has
+suggested, the shortlist, trips, itineraries, expenses, checklists, packing lists, stories and the
+memory book. Components never see wire types — `services/map.ts` converts them.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Four things are deliberately **not** server state:
+
+- **The local atlas** (`data/destinations.ts`) — imagery, galleries, experiences, stays and travel
+  options. The backend's destination rows have no columns for these, so a suggestion whose name
+  matches an atlas entry borrows its art and copy; others render without those sections.
+- **The wheel line-up and which trip is active** — UI state, kept in `localStorage`.
+- **Packing tick-boxes** — the backend stores the generated list but has no route to mark an item
+  packed, so ticks live on the device.
+- **Flights / hotels / geocoding** (`services/travel.mock.ts`) — no backend endpoints exist yet.
+
+Two backend shapes drive the flow more than they look:
+
+- `POST /trips/plan` creates the trip *and* generates its itinerary in one call, so the planner form
+  lives at `/plan/[destinationId]`, before a trip id exists.
+- The only itinerary-editing route is a natural-language rewrite of the whole plan, so "replace",
+  "find cheaper", "add" and reordering are all phrased as instructions for it (`services/trips.ts`).
+  Completing, moving between days and deleting have their own precise routes.
+
+## Notes
+
+- Currency is configurable in `lib/currency.ts` (`ACTIVE_CURRENCY`). Default: ₹ / `en-IN`.
+- Photos are Unsplash CDN URLs with a deterministic Picsum fallback (`components/ui/SmartImage.tsx`).
+- "Clear local data" in the footer wipes the device-local state only; server data is untouched.
