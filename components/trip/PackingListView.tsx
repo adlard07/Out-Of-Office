@@ -43,7 +43,7 @@ export function PackingListView({ trip }: { trip: Trip }) {
             Written by the planner from {trip.destinationName}, {trip.days} days and your itinerary.
           </p>
           <div className="mt-3 w-64 max-w-full">
-            <ProgressBar value={progress.pct} gradient="linear-gradient(90deg,#43d6a0,#3fbaf8)" />
+            <ProgressBar value={progress.pct} gradient="#ffffff" />
           </div>
           <p className="mt-1 text-xs text-white/40">{progress.done} of {progress.total} packed</p>
         </div>
@@ -73,7 +73,7 @@ export function PackingListView({ trip }: { trip: Trip }) {
               <span
                 className={cn(
                   "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-[11px]",
-                  item.packed ? "border-emerald-400 bg-emerald-400 text-night-950" : "border-white/25",
+                  item.packed ? "border-white bg-white text-night-950" : "border-white/25",
                 )}
               >
                 {item.packed && (

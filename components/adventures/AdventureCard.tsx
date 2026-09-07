@@ -25,7 +25,7 @@ export function AdventureCard({ adventure: a, index = 0 }: { adventure: Adventur
           fallbackSeed={a.id}
           className="transition-transform duration-[1.2s] group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/20 to-transparent" />
+        <div className="absolute inset-0 bg-night-950/45" />
 
         <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 text-xs text-white/70">
           <span>{formatDateRange(a.startDate, a.endDate)}</span>

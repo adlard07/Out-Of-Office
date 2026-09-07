@@ -3,16 +3,15 @@
 import { useRef, useState } from "react";
 import type { WheelEntry } from "@/lib/types";
 
-const SEGMENT_COLORS = [
-  "#f83f63",
-  "#eec06a",
-  "#7c5cff",
-  "#3fbaf8",
-  "#43d6a0",
-  "#ff8a5c",
-  "#c084fc",
-  "#f472b6",
-];
+// Alternating light / dark greys so neighbouring segments always contrast.
+const SEGMENT_COLORS = ["#fafafa", "#171717", "#d4d4d4", "#2e2e2e", "#e8e8e8", "#232323", "#bdbdbd", "#3a3a3a"];
+
+/** Readable label colour for a given segment fill. */
+function labelColor(hex: string): string {
+  const n = parseInt(hex.slice(1), 16);
+  const lum = 0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
+  return lum > 140 ? "#0a0a0a" : "#ffffff";
+}
 
 const SPIN_MS = 5000;
 
@@ -75,25 +74,26 @@ export function SpinWheel({ entries, onResult, spinning, setSpinning, size = 380
         }}
       >
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="drop-shadow-2xl">
-          <circle cx={cx} cy={cy} r={r} fill="#0a0710" />
+          <circle cx={cx} cy={cy} r={r} fill="#000000" />
           {entries.map((entry, i) => {
             const mid = -90 + i * seg + seg / 2;
             const rad = (mid * Math.PI) / 180;
             const lx = cx + r * 0.62 * Math.cos(rad);
             const ly = cy + r * 0.62 * Math.sin(rad);
+            const fill = SEGMENT_COLORS[i % SEGMENT_COLORS.length];
             return (
               <g key={entry.id}>
                 <path
                   d={arc(i)}
-                  fill={SEGMENT_COLORS[i % SEGMENT_COLORS.length]}
-                  fillOpacity={0.92}
-                  stroke="#0a0710"
+                  fill={fill}
+                  fillOpacity={1}
+                  stroke="#000000"
                   strokeWidth={2}
                 />
                 <text
                   x={lx}
                   y={ly}
-                  fill="#0a0710"
+                  fill={labelColor(fill)}
                   fontSize={n > 9 ? 12 : 14}
                   fontWeight={700}
                   textAnchor="middle"

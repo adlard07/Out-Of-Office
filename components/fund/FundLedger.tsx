@@ -9,9 +9,9 @@ import { cn } from "@/lib/cn";
 
 const META: Record<LedgerKind, { icon: string; tint: string; label: string }> = {
   opening: { icon: "🏦", tint: "text-white/70", label: "Opening balance" },
-  monthly: { icon: "🔁", tint: "text-gold-300", label: "Monthly contribution" },
-  deposit: { icon: "➕", tint: "text-emerald-300", label: "Added" },
-  withdrawal: { icon: "➖", tint: "text-brand-300", label: "Withdrawn" },
+  monthly: { icon: "🔁", tint: "text-white", label: "Monthly contribution" },
+  deposit: { icon: "➕", tint: "text-white", label: "Added" },
+  withdrawal: { icon: "➖", tint: "text-white/55", label: "Withdrawn" },
 };
 
 const PREVIEW = 6;
@@ -32,7 +32,9 @@ export function FundLedger() {
           <h2 className="font-display text-2xl text-white">Month by month</h2>
           <p className="text-sm text-white/50">Every contribution, in order, with the running total.</p>
         </div>
-        <span className="text-sm text-white/40">{ledger.length} entries</span>
+        <span className="text-sm text-white/40">
+          {ledger.length} {ledger.length === 1 ? "entry" : "entries"}
+        </span>
       </div>
 
       <div className="glass overflow-hidden rounded-3xl">

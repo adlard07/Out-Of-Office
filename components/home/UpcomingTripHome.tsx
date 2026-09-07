@@ -22,7 +22,7 @@ export function UpcomingTripHome({ trip }: { trip: Trip }) {
     <section className="relative isolate min-h-[100svh] overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <SmartImage src={trip.heroImage} alt={trip.destinationName} fallbackSeed={trip.destinationId} priority />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/70 to-night-950/40" />
+        <div className="absolute inset-0 bg-night-950/62" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-6 sm:pb-16 sm:pt-32">
@@ -84,7 +84,7 @@ export function UpcomingTripHome({ trip }: { trip: Trip }) {
             <p className="mt-1 font-display text-4xl text-white">
               <AnimatedCounter value={totals.allocatedPct} format={(n) => `${Math.round(n)}%`} />
             </p>
-            <ProgressBar value={totals.allocatedPct} className="mt-4" gradient="linear-gradient(90deg,#7c5cff,#3fbaf8)" />
+            <ProgressBar value={totals.allocatedPct} className="mt-4" gradient="#ffffff" />
             <p className="mt-4 text-sm text-white/50">
               {formatMoney(totals.estimatedSpend, { compact: true })} of {formatMoney(totals.totalBudget, { compact: true })} planned
             </p>

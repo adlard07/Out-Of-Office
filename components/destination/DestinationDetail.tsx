@@ -27,7 +27,7 @@ export function DestinationDetail({ destination: d }: { destination: Destination
       {/* Hero */}
       <section className="relative h-[75svh] min-h-[520px] w-full overflow-hidden">
         <SmartImage src={d.image} alt={d.name} fallbackSeed={d.id} priority />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/40 to-night-950/30" />
+        <div className="absolute inset-0 bg-night-950/55" />
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-5xl px-5 pb-12 sm:px-6">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -133,7 +133,7 @@ export function DestinationDetail({ destination: d }: { destination: Destination
               <div key={a.name} className="glass overflow-hidden rounded-2xl">
                 <div className="relative aspect-[4/3]">
                   <SmartImage src={a.image} alt={a.name} fallbackSeed={`${d.id}-${a.name}`} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-night-950/70 to-transparent" />
+                  <div className="absolute inset-0 bg-night-950/45" />
                   <span className="absolute right-2 top-2 rounded-full bg-night-950/70 px-2 py-0.5 text-xs text-gold-300">
                     ★ {a.rating}
                   </span>

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-const COLORS = ["#f83f63", "#eec06a", "#7c5cff", "#3fbaf8", "#43d6a0", "#ff8a5c", "#ffffff"];
+const COLORS = ["#ffffff", "#e5e5e5", "#c4c4c4", "#a3a3a3", "#f5f5f5", "#d4d4d4", "#8a8a8a"];
 
 type Shape = "rect" | "circle" | "star";
 

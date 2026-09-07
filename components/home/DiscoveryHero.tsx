@@ -13,8 +13,8 @@ const ACTIONS = [
 ] as const;
 
 const variantCls: Record<string, string> = {
-  gold: "bg-gold-400 text-night-950 hover:bg-gold-300",
-  primary: "bg-brand-500 text-white hover:bg-brand-400",
+  gold: "bg-white text-night-950 hover:bg-white/90",
+  primary: "border border-white/25 text-white hover:bg-white/10",
   glass: "glass text-white hover:bg-white/12",
 };
 
@@ -28,8 +28,7 @@ export function DiscoveryHero() {
           fallbackSeed="hero-beach"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/50 to-night-950/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-night-950/60 to-transparent" />
+        <div className="absolute inset-0 bg-night-950/60" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-28 sm:px-6 sm:pb-24">

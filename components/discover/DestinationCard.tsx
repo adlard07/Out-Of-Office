@@ -33,7 +33,7 @@ export function DestinationCard({ destination: d, recommendation, index = 0 }: D
     >
       <Link href={`/destination/${d.id}`} className="relative block aspect-[4/3] overflow-hidden">
         <SmartImage src={d.image} alt={d.name} fallbackSeed={d.id} className="transition-transform duration-700 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950/85 via-night-950/10 to-transparent" />
+        <div className="absolute inset-0 bg-night-950/55" />
         {recommendation && (
           <div className="absolute right-3 top-3 rounded-full bg-night-950/70 px-2.5 py-1 text-xs font-semibold text-gold-300 backdrop-blur">
             {recommendation.matchScore}% match

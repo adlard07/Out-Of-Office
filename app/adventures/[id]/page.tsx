@@ -43,7 +43,7 @@ export default function AdventurePage({ params }: { params: Promise<{ id: string
     <article>
       <section className="relative h-[70svh] min-h-[460px] overflow-hidden">
         <SmartImage src={a.heroImage} alt={a.destinationName} fallbackSeed={a.id} priority />
-        <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/40 to-night-950/40" />
+        <div className="absolute inset-0 bg-night-950/55" />
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-5xl px-5 pb-12 sm:px-6">
           <Link href="/adventures" className="text-sm text-white/60 hover:text-white">← The memory book</Link>
           <motion.h1
@@ -113,7 +113,7 @@ export default function AdventurePage({ params }: { params: Promise<{ id: string
                       Planned {formatMoney(l.planned, { compact: true })} ·{" "}
                       <span className="text-white">{formatMoney(l.actual, { compact: true })}</span>
                       {delta !== 0 && (
-                        <span className={delta > 0 ? "text-brand-300" : "text-emerald-300"}>
+                        <span className={delta > 0 ? "text-brand-300" : "text-white"}>
                           {" "}({delta > 0 ? "+" : ""}{formatMoney(delta, { compact: true })})
                         </span>
                       )}

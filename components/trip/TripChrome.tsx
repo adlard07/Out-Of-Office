@@ -29,7 +29,7 @@ export function TripChrome({ trip, children }: { trip: Trip; children: React.Rea
       <header className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <SmartImage src={trip.heroImage} alt={trip.destinationName} fallbackSeed={trip.destinationId} priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/70 to-night-950/50" />
+          <div className="absolute inset-0 bg-night-950/68" />
         </div>
 
         <div className="mx-auto max-w-6xl px-5 pb-6 pt-24 sm:px-6 sm:pt-28">
@@ -80,7 +80,7 @@ export function TripChrome({ trip, children }: { trip: Trip; children: React.Rea
                   {active && (
                     <motion.span
                       layoutId="trip-tab"
-                      className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-400"
+                      className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-white"
                     />
                   )}
                 </Link>

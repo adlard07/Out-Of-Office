@@ -32,7 +32,7 @@ export function BudgetDashboard({ trip }: { trip: Trip }) {
     { label: "Total Budget", value: totals.totalBudget, tone: "text-white" },
     { label: "Estimated Spend", value: totals.estimatedSpend, tone: "text-white" },
     { label: "Actual Spend", value: totals.actualSpend, tone: "text-gold-300" },
-    { label: "Remaining Budget", value: totals.remaining, tone: totals.remaining < 0 ? "text-brand-300" : "text-emerald-300" },
+    { label: "Remaining Budget", value: totals.remaining, tone: totals.remaining < 0 ? "text-brand-300" : "text-white" },
   ];
 
   return (
@@ -96,7 +96,7 @@ export function BudgetDashboard({ trip }: { trip: Trip }) {
                   </span>
                   <span className="text-white/60">
                     Planned {formatMoney(line.planned, { compact: true })} · Actual{" "}
-                    <span className={delta > 0 ? "text-brand-300" : delta < 0 ? "text-emerald-300" : "text-white/60"}>
+                    <span className={delta > 0 ? "text-brand-300" : delta < 0 ? "text-white" : "text-white/60"}>
                       {formatMoney(line.actual, { compact: true })}
                     </span>
                   </span>
@@ -138,7 +138,7 @@ export function BudgetDashboard({ trip }: { trip: Trip }) {
             "mt-4 rounded-2xl border p-4 text-sm",
             overallDelta > 0
               ? "border-brand-400/30 bg-brand-500/10 text-brand-100"
-              : "border-emerald-400/30 bg-emerald-500/10 text-emerald-100",
+              : "border-white/20 bg-white/8 text-white/80",
           )}
         >
           {totals.actualSpend === 0

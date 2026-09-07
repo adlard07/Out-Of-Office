@@ -46,7 +46,7 @@ export function ActivityCard({
       animate={{
         opacity: 1,
         y: 0,
-        boxShadow: highlight ? "0 0 0 2px rgba(238,192,106,0.7)" : "0 0 0 0px transparent",
+        boxShadow: highlight ? "0 0 0 2px rgba(255,255,255,0.8)" : "0 0 0 0px transparent",
       }}
       transition={{ duration: 0.35 }}
       className={cn(
@@ -61,7 +61,7 @@ export function ActivityCard({
           aria-label="Mark completed"
           className={cn(
             "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px]",
-            a.completed ? "border-emerald-400 bg-emerald-400 text-night-950" : "border-white/30",
+            a.completed ? "border-white bg-white text-night-950" : "border-white/30",
           )}
         >
           {a.completed ? "✓" : ""}

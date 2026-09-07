@@ -162,7 +162,7 @@ export function ItineraryBoard({ trip }: { trip: Trip }) {
           <ProgressBar
             value={pct}
             className="mt-2"
-            gradient={overBudget ? "linear-gradient(90deg,#f83f63,#ff8a5c)" : "linear-gradient(90deg,#43d6a0,#3fbaf8)"}
+            gradient={overBudget ? "#9a9a9a" : "#ffffff"}
           />
         </div>
 

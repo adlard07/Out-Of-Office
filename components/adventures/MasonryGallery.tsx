@@ -31,7 +31,7 @@ export function MasonryGallery({ memories, initial = 6 }: { memories: Memory[]; 
                 m.span === "tall" ? "aspect-[3/4]" : m.span === "wide" ? "aspect-[16/10]" : "aspect-square"
               }
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-night-950/80 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-night-950/55 opacity-0 transition-opacity group-hover:opacity-100" />
             <p className="absolute inset-x-0 bottom-0 translate-y-2 p-3 text-left text-xs text-white opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
               {m.caption}
             </p>
@@ -67,7 +67,7 @@ export function MasonryGallery({ memories, initial = 6 }: { memories: Memory[]; 
               className="relative z-10 max-h-[85vh] max-w-3xl overflow-hidden rounded-3xl"
             >
               <SmartImage src={active.image} alt={active.caption} fallbackSeed={active.id} priority />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night-950 to-transparent p-5 text-white">
+              <figcaption className="absolute inset-x-0 bottom-0 bg-night-950/75 p-5 text-white">
                 {active.caption}
               </figcaption>
             </motion.figure>

@@ -48,6 +48,7 @@ export function SmartImage({ src, alt, className, fallbackSeed, priority }: Smar
         else setLoaded(true);
       }}
       className={cn(
+        // Chrome is monochrome, but photography stays in full colour.
         "h-full w-full object-cover transition-[opacity,filter] duration-700",
         loaded ? "opacity-100 blur-0" : "opacity-0 blur-md",
         className,

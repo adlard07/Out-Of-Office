@@ -41,21 +41,21 @@ export function ResultReveal({
           >
             <div className="relative aspect-[4/3]">
               <SmartImage src={entry.image} alt={entry.name} fallbackSeed={entry.id} priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-night-950/45" />
 
               {/* The pin drop */}
               <motion.div
                 initial={{ y: -120, opacity: 0, scale: 0.4 }}
                 animate={{ y: 0, opacity: 1, scale: 1 }}
                 transition={{ type: "spring", stiffness: 500, damping: 16, delay: 0.15 }}
-                className="absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 text-2xl shadow-xl shadow-brand-600/40"
+                className="absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-full bg-white text-2xl shadow-xl shadow-black/50"
               >
                 📍
                 <motion.span
                   initial={{ scale: 0, opacity: 0.7 }}
                   animate={{ scale: 2.4, opacity: 0 }}
                   transition={{ duration: 0.7, delay: 0.28 }}
-                  className="absolute inset-0 rounded-full border-2 border-brand-400"
+                  className="absolute inset-0 rounded-full border-2 border-white"
                 />
               </motion.div>
 

@@ -16,7 +16,7 @@ export function ProgressBar({
   value,
   className,
   trackClassName,
-  gradient = "linear-gradient(90deg, #f83f63, #eec06a)",
+  gradient = "#ffffff",
   height = 10,
   label,
 }: ProgressBarProps) {

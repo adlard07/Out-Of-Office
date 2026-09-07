@@ -1,14 +1,14 @@
 import type { BudgetCategory, BudgetLine, Trip } from "./types";
 
 export const CATEGORY_META: Record<BudgetCategory, { label: string; icon: string; color: string }> = {
-  flights: { label: "Flights", icon: "✈️", color: "#f83f63" },
-  hotels: { label: "Hotels", icon: "🏨", color: "#eec06a" },
-  food: { label: "Food", icon: "🍽️", color: "#7c5cff" },
-  transport: { label: "Local Transport", icon: "🚕", color: "#3fbaf8" },
-  activities: { label: "Activities", icon: "🎟️", color: "#43d6a0" },
-  shopping: { label: "Shopping", icon: "🛍️", color: "#ff8a5c" },
-  misc: { label: "Miscellaneous", icon: "✨", color: "#c084fc" },
-  buffer: { label: "Emergency Buffer", icon: "🛟", color: "#94a3b8" },
+  flights: { label: "Flights", icon: "✈️", color: "#ffffff" },
+  hotels: { label: "Hotels", icon: "🏨", color: "#dcdcdc" },
+  food: { label: "Food", icon: "🍽️", color: "#bdbdbd" },
+  transport: { label: "Local Transport", icon: "🚕", color: "#e8e8e8" },
+  activities: { label: "Activities", icon: "🎟️", color: "#c9c9c9" },
+  shopping: { label: "Shopping", icon: "🛍️", color: "#a8a8a8" },
+  misc: { label: "Miscellaneous", icon: "✨", color: "#909090" },
+  buffer: { label: "Emergency Buffer", icon: "🛟", color: "#787878" },
 };
 
 export const CATEGORY_ORDER: BudgetCategory[] = [

@@ -175,7 +175,7 @@ export function fundStats(fund: TravelFund): FundStats {
 
   const year = String(now.getFullYear());
   const contributedThisYear = ledger
-    .filter((r) => r.kind !== "opening" && r.month.startsWith(year))
+    .filter((r) => r.month.startsWith(year) && r.amount > 0)
     .reduce((s, r) => s + r.amount, 0);
 
   const nextMonth = addMonths(currentMonthKey(), 1);

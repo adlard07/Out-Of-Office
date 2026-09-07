@@ -25,7 +25,7 @@ export function SpecificPicker() {
                 fallbackSeed={d.id}
                 className="transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-night-950/80 to-transparent" />
+              <div className="absolute inset-0 bg-night-950/50" />
               <div className="absolute inset-x-0 bottom-0 p-4">
                 <p className="text-xs uppercase tracking-widest text-white/60">{d.country}</p>
                 <h3 className="font-display text-2xl text-white">{d.name}</h3>

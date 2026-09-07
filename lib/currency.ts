@@ -23,12 +23,44 @@ export function formatMoney(
   opts: { compact?: boolean; currency?: CurrencyConfig } = {},
 ): string {
   const currency = opts.currency ?? ACTIVE_CURRENCY;
+  if (opts.compact) return compactMoney(amount, currency);
   return new Intl.NumberFormat(currency.locale, {
     style: "currency",
     currency: currency.code,
-    maximumFractionDigits: opts.compact ? 1 : 0,
-    notation: opts.compact ? "compact" : "standard",
+    maximumFractionDigits: 0,
   }).format(amount);
+}
+
+/**
+ * Hand-rolled compact formatting. `Intl` compact notation ("1.7L", "95K") depends
+ * on the runtime's ICU version, so Node and the browser can disagree and trigger
+ * a hydration mismatch. This produces identical output everywhere.
+ */
+function compactMoney(amount: number, currency: CurrencyConfig): string {
+  const sign = amount < 0 ? "-" : "";
+  const abs = Math.abs(amount);
+
+  const units =
+    currency.locale === "en-IN"
+      ? ([
+          [1e7, "Cr"],
+          [1e5, "L"],
+          [1e3, "K"],
+        ] as const)
+      : ([
+          [1e9, "B"],
+          [1e6, "M"],
+          [1e3, "K"],
+        ] as const);
+
+  for (const [size, suffix] of units) {
+    if (abs >= size) {
+      const value = Math.round((abs / size) * 10) / 10;
+      const str = value % 1 === 0 ? String(value) : value.toFixed(1);
+      return `${sign}${currency.symbol}${str}${suffix}`;
+    }
+  }
+  return `${sign}${currency.symbol}${Math.round(abs).toLocaleString(currency.locale)}`;
 }
 
 /** Plain grouped number without the currency symbol. */

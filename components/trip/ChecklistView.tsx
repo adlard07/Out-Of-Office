@@ -47,7 +47,7 @@ export function ChecklistView({ trip }: { trip: Trip }) {
                         className={cn(
                           "flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-[11px]",
                           item.done
-                            ? "border-emerald-400 bg-emerald-400 text-night-950"
+                            ? "border-white bg-white text-night-950"
                             : "border-white/25",
                         )}
                       >

@@ -82,7 +82,7 @@ export default function TripOverviewPage({ params }: { params: Promise<{ id: str
               <p className="font-display text-3xl text-white">
                 <AnimatedCounter value={pack.pct} format={(n) => `${Math.round(n)}%`} />
               </p>
-              <ProgressBar value={pack.pct} className="mt-3" gradient="linear-gradient(90deg,#43d6a0,#3fbaf8)" />
+              <ProgressBar value={pack.pct} className="mt-3" gradient="#ffffff" />
               <p className="mt-2 text-xs text-white/40">{pack.done} of {pack.total} packed</p>
             </div>
             <Link href={`/trip/${trip.id}/checklist`} className="mt-auto text-sm text-brand-300 hover:text-brand-200">
@@ -115,7 +115,7 @@ export default function TripOverviewPage({ params }: { params: Promise<{ id: str
               </div>
             ))}
           </div>
-          <ProgressBar value={totals.allocatedPct} className="mt-5" gradient="linear-gradient(90deg,#7c5cff,#3fbaf8)" />
+          <ProgressBar value={totals.allocatedPct} className="mt-5" gradient="#ffffff" />
           <p className="mt-2 text-xs text-white/40">{totals.allocatedPct}% of the budget is allocated</p>
         </GlassCard>
       </Reveal>
