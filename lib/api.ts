@@ -6,8 +6,11 @@
  * actually went wrong instead of "something failed".
  */
 
+/** The deployed backend. Override with NEXT_PUBLIC_API_BASE_URL to use a local one. */
+const DEPLOYED_API = "https://ohys7a7koazwgvaopochceokye0htxhz.lambda-url.ap-south-1.on.aws";
+
 export const API_BASE_URL = (
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000"
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? DEPLOYED_API
 ).replace(/\/+$/, "");
 
 const PREFIX = "/api/v1";
@@ -91,7 +94,7 @@ async function request<T>(method: string, path: string, opts: RequestOptions = {
     });
   } catch (cause) {
     if (cause instanceof DOMException && cause.name === "AbortError") throw cause;
-    throw new ApiError(0, `Can't reach the API at ${API_BASE_URL}. Is the backend running?`, path);
+    throw new ApiError(0, "Can't reach the backend. Is it running?", path);
   }
 
   if (response.status === 204) return undefined as T;

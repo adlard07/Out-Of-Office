@@ -14,23 +14,24 @@ function labelColor(hex: string): string {
 }
 
 const SPIN_MS = 5000;
+/** SVG coordinate space — the element itself scales fluidly via CSS. */
+const VIEW = 380;
 
 interface SpinWheelProps {
   entries: WheelEntry[];
   onResult: (entry: WheelEntry) => void;
   spinning: boolean;
   setSpinning: (v: boolean) => void;
-  size?: number;
 }
 
-export function SpinWheel({ entries, onResult, spinning, setSpinning, size = 380 }: SpinWheelProps) {
+export function SpinWheel({ entries, onResult, spinning, setSpinning }: SpinWheelProps) {
   const [rotation, setRotation] = useState(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const n = entries.length;
   const seg = 360 / Math.max(n, 1);
-  const cx = size / 2;
-  const cy = size / 2;
-  const r = size / 2;
+  const cx = VIEW / 2;
+  const cy = VIEW / 2;
+  const r = VIEW / 2;
 
   function spin() {
     if (spinning || n < 2) return;
@@ -61,7 +62,7 @@ export function SpinWheel({ entries, onResult, spinning, setSpinning, size = 380
   }
 
   return (
-    <div className="relative mx-auto" style={{ width: size, height: size }}>
+    <div className="relative mx-auto aspect-square w-full max-w-[min(88vw,380px)]">
       <div className="absolute left-1/2 top-[-6px] z-20 -translate-x-1/2">
         <div className="h-0 w-0 border-x-[14px] border-t-[24px] border-x-transparent border-t-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]" />
       </div>
@@ -73,7 +74,7 @@ export function SpinWheel({ entries, onResult, spinning, setSpinning, size = 380
           transition: spinning ? `transform ${SPIN_MS}ms cubic-bezier(0.12, 0.7, 0.05, 1)` : "none",
         }}
       >
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="drop-shadow-2xl">
+        <svg viewBox={`0 0 ${VIEW} ${VIEW}`} className="h-full w-full drop-shadow-2xl">
           <circle cx={cx} cy={cy} r={r} fill="#000000" />
           {entries.map((entry, i) => {
             const mid = -90 + i * seg + seg / 2;
@@ -83,13 +84,7 @@ export function SpinWheel({ entries, onResult, spinning, setSpinning, size = 380
             const fill = SEGMENT_COLORS[i % SEGMENT_COLORS.length];
             return (
               <g key={entry.id}>
-                <path
-                  d={arc(i)}
-                  fill={fill}
-                  fillOpacity={1}
-                  stroke="#000000"
-                  strokeWidth={2}
-                />
+                <path d={arc(i)} fill={fill} fillOpacity={1} stroke="#000000" strokeWidth={2} />
                 <text
                   x={lx}
                   y={ly}
@@ -112,7 +107,7 @@ export function SpinWheel({ entries, onResult, spinning, setSpinning, size = 380
       <button
         onClick={spin}
         disabled={spinning || n < 2}
-        className="absolute left-1/2 top-1/2 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-night-950 bg-white text-sm font-bold text-night-950 shadow-xl transition hover:scale-105 disabled:opacity-70"
+        className="absolute left-1/2 top-1/2 z-10 flex h-[21%] w-[21%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-night-950 bg-white text-xs font-bold text-night-950 shadow-xl transition hover:scale-105 disabled:opacity-70 sm:text-sm"
       >
         {spinning ? "…" : n < 2 ? "Add 2+" : "SPIN"}
       </button>

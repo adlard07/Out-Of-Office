@@ -11,20 +11,26 @@ Trips, itineraries, budgets, checklists and the memory book all come from the Fa
 
 ```bash
 npm install
-cp .env.local.example .env.local     # then point NEXT_PUBLIC_API_BASE_URL at the backend
+cp .env.local.example .env.local
 npm run dev
 ```
 
 Open http://localhost:3000. `npm run build` for a production build, `npm run typecheck` for types.
 
-The backend must be running (`uvicorn app.main:app --reload` in `../backend`, default
-`http://localhost:8000`) and its `FRONTEND_ORIGIN` must include this origin or CORS will block every
-call. When the API is unreachable a banner says so rather than the screens silently emptying.
+By default this talks to the **deployed** backend — the Lambda function URL in `ap-south-1`. To work
+against a local backend instead, run `uvicorn app.main:app --reload` in `../backend` and set
+`NEXT_PUBLIC_API_BASE_URL=http://localhost:8000`.
+
+Either way the backend's `FRONTEND_ORIGIN` must include this origin or CORS blocks every call. When
+the API is unreachable a banner says so rather than the screens silently emptying.
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
-| `NEXT_PUBLIC_API_BASE_URL` | Backend origin; `/api/v1` is appended by the client | `http://localhost:8000` |
+| `NEXT_PUBLIC_API_BASE_URL` | Backend origin; `/api/v1` is appended by the client | `https://ohys7a7koazwgvaopochceokye0htxhz.lambda-url.ap-south-1.on.aws` |
 | `NEXT_PUBLIC_API_TOKEN` | Bearer token, only when the backend runs with `AUTH_ENABLED=true` | unset |
+
+`NEXT_PUBLIC_*` values are inlined into the browser bundle at build time, so a change needs a dev
+server restart (or a rebuild) to take effect.
 
 ## The six features
 

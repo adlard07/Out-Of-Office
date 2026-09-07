@@ -90,7 +90,7 @@ export function TripChrome({ trip, children }: { trip: Trip; children: React.Rea
         </nav>
       </header>
 
-      <div className="mx-auto max-w-6xl px-5 pb-28 pt-8 sm:px-6 sm:pb-16">{children}</div>
+      <div className="mx-auto max-w-6xl px-5 pb-28 pt-8 sm:px-6 md:pb-16">{children}</div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export function PageShell({
   return (
     <main
       className={cn(
-        "mx-auto px-5 pb-28 pt-24 sm:px-6 sm:pb-16 sm:pt-28",
+        "mx-auto px-5 pb-28 pt-16 sm:px-6 md:pb-16 md:pt-28",
         wide ? "max-w-7xl" : "max-w-5xl",
         className,
       )}

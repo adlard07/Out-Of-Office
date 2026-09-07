@@ -31,7 +31,7 @@ export function DiscoveryHero() {
         <div className="absolute inset-0 bg-night-950/60" />
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-28 sm:px-6 sm:pb-24">
+      <div className="mx-auto w-full max-w-7xl px-5 pb-32 pt-24 sm:px-6 md:pb-24 md:pt-28">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

@@ -45,15 +45,15 @@ export function Navbar() {
       {/* Desktop / tablet top bar */}
       <motion.header
         className={cn(
-          "fixed inset-x-0 top-0 z-40 hidden transition-all sm:block",
+          "fixed inset-x-0 top-0 z-40 hidden transition-all md:block",
           scrolled ? "glass-strong border-b border-white/10" : "bg-transparent",
         )}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="font-display text-lg tracking-tight text-white">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 lg:px-6">
+          <Link href="/" className="shrink-0 font-display text-lg tracking-tight text-white">
             two<span className="text-brand-400">·</span>tickets
           </Link>
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-0.5 lg:gap-1">
             {items.map((item) => {
               const active = item.match(pathname);
               return (
@@ -61,7 +61,7 @@ export function Navbar() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                      "relative block whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors lg:px-4",
                       active ? "text-white" : "text-white/55 hover:text-white",
                     )}
                   >
@@ -82,23 +82,27 @@ export function Navbar() {
       </motion.header>
 
       {/* Mobile bottom tab bar */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 sm:hidden">
-        <div className="glass-strong mx-3 mb-3 flex items-center justify-between rounded-2xl px-2 py-2">
+      <nav
+        className="fixed inset-x-0 bottom-0 z-40 pb-[max(0.5rem,env(safe-area-inset-bottom))] md:hidden"
+        aria-label="Primary"
+      >
+        <div className="mx-2 flex items-stretch justify-between rounded-2xl border border-white/12 bg-black/92 px-1 py-1.5 backdrop-blur-xl">
           {items.map((item) => {
             const active = item.match(pathname);
             return (
               <Link
                 key={item.label}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-1.5 text-[10px] font-medium transition-colors",
+                  "flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-xl px-0.5 py-1 font-medium transition-colors",
                   active ? "text-white" : "text-white/45",
                 )}
               >
-                <span className={cn("text-base transition-transform", active && "scale-110")}>
+                <span className={cn("text-[17px] leading-none transition-transform", active && "scale-110")}>
                   {item.icon}
                 </span>
-                {item.short}
+                <span className="max-w-full truncate text-[9px] tracking-tight">{item.short}</span>
               </Link>
             );
           })}

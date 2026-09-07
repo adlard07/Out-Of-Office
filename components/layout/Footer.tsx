@@ -6,7 +6,7 @@ import { useStore } from "@/lib/store";
 export function Footer() {
   const { resetLocal } = useStore();
   return (
-    <footer className="mx-auto mt-24 max-w-7xl px-6 pb-28 pt-10 text-sm text-white/40 sm:pb-12">
+    <footer className="mx-auto mt-24 max-w-7xl px-6 pb-28 pt-10 text-sm text-white/40 md:pb-12">
       <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
         <p className="font-display text-base text-white/70">
           two·tickets — a private travel universe for two

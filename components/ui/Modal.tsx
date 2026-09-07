@@ -44,7 +44,7 @@ export function Modal({ open, onClose, children, title, className }: ModalProps)
             exit={{ y: 20, opacity: 0, scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
             className={cn(
-              "glass-strong relative z-10 w-full max-w-lg rounded-t-3xl p-6 sm:rounded-3xl",
+              "glass-strong relative z-10 flex max-h-[90svh] w-full max-w-lg flex-col overflow-y-auto overscroll-contain rounded-t-3xl p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:max-h-[85vh] sm:rounded-3xl sm:pb-6",
               className,
             )}
           >

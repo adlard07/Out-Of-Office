@@ -25,7 +25,7 @@ export function UpcomingTripHome({ trip }: { trip: Trip }) {
         <div className="absolute inset-0 bg-night-950/62" />
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-6 sm:pb-16 sm:pt-32">
+      <div className="mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-6 md:pb-16 sm:pt-32">
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
