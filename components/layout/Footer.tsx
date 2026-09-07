@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="mx-auto mt-24 max-w-7xl px-6 pb-28 pt-10 text-sm text-white/40 md:pb-12">
       <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
         <p className="font-display text-base text-white/70">
-          two·tickets — a private travel universe for two
+          two·tickets — a private travel universe for Hritu & Adu
         </p>
         <div className="flex flex-wrap items-center gap-4">
           <Link href="/discover" className="hover:text-white">Discover</Link>
