@@ -109,7 +109,11 @@ interface StoreValue extends PersistShape {
   correctFundBalance: (target: number) => void;
   resetFund: () => void;
 
-  /** Wipe device-local state (wheel, caches, packing ticks). Server data and the fund are untouched. */
+  /**
+   * Wipe *all* device-local state — wheel line-up, shortlist, destination cache,
+   * packing ticks, active-trip pointer and the travel fund (back to its seed).
+   * Server data (trips, itineraries, the memory book) is untouched.
+   */
   resetLocal: () => void;
 }
 
@@ -132,7 +136,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [tripsLoading, setTripsLoading] = useState(true);
   const [hydrated, setHydrated] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const ready = useRef(false);
   const inFlight = useRef(new Map<string, Promise<Trip | undefined>>());
   // Read inside callbacks that must not re-create themselves on every tick.
   const packedRef = useRef(local.packed);
@@ -142,6 +145,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   /* ---------------- persistence ---------------- */
 
+  // Load once on mount. Both setState calls batch into a single commit, so by the
+  // time the writer effect below sees `hydrated === true`, `local` is already the
+  // restored value — never EMPTY.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -157,17 +163,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       /* ignore corrupt storage */
     }
     setHydrated(true);
-    ready.current = true;
   }, []);
 
   useEffect(() => {
-    if (!ready.current) return;
+    if (!hydrated) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(local));
     } catch {
       /* storage full / unavailable */
     }
-  }, [local]);
+  }, [local, hydrated]);
 
   /** Packed ticks are device-local, so re-apply them whenever a trip arrives. */
   const withPacked = useCallback(
@@ -490,7 +495,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const resetLocal = useCallback(() => {
-    setLocal((s) => ({ ...EMPTY, fund: s.fund }));
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* storage unavailable */
+    }
+    setLocal({ ...EMPTY, fund: defaultFund() });
     setTrips({});
     void refreshTrips();
   }, [refreshTrips]);
