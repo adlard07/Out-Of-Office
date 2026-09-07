@@ -7,6 +7,7 @@ import { SmartImage } from "@/components/ui/SmartImage";
 import { formatMoney } from "@/lib/currency";
 import { formatDateRange } from "@/lib/date";
 
+
 export function AdventureCard({ adventure: a, index = 0 }: { adventure: Adventure; index?: number }) {
   return (
     <motion.article
